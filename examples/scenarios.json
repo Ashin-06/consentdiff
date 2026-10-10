@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1-design",
+  "implementation_status": "specification_only_not_executable",
+  "runtime_support": "Design-only scenario language. The implemented catalogue in consentdiff/core.py uses its own fixed variant and journey identifiers; this file is not loaded.",
+  "common_intent": {
+    "intent_id": "share-file-42-with-user-7-as-viewer",
+    "actor": "file-owner",
+    "action": "share_file",
+    "resource": "file-42",
+    "critical_arguments": {"recipient": "user-7", "role": "viewer"},
+    "allowed_effects": ["one viewer grant to user-7 on file-42"],
+    "required_postconditions": {"confirmed_success": "exactly_one_viewer_grant_to_user_7_on_file_42", "pre_commit_cancel": "no_committed_grant"},
+    "forbidden_effects": ["editor grant", "public link", "grant to another user", "duplicate commit"],
+    "confirmation_required": true,
+    "cancellation_semantics": "pre_commit_cancel_prevents_commit"
+  },
+  "scenarios": [
+    {"id": "CD-001", "title": "Correct viewer share on both paths", "fixture_variant": "safe", "journey": "stage_then_confirm", "expected_status": "PASS"},
+    {"id": "CD-002", "title": "Tool silently widens role", "fixture_variant": "tool_defaults_to_editor", "journey": "stage_then_confirm", "expected_status": "FAIL", "expected_kind": "overbroad_permission"},
+    {"id": "CD-003", "title": "Both interfaces agree on the wrong role", "fixture_variant": "both_paths_default_to_editor", "journey": "stage_then_confirm", "expected_status": "FAIL", "expected_kind": "intent_violation"},
+    {"id": "CD-004", "title": "Tool commits after cancellation", "fixture_variant": "tool_ignores_precommit_cancel", "journey": "stage_then_cancel", "expected_status": "FAIL", "expected_kind": "cancellation_violation"},
+    {"id": "CD-005", "title": "Old confirmation reused after role change", "fixture_variant": "tool_confirmation_not_version_bound", "journey": "stage_viewer_confirm_change_to_editor_commit_old_confirmation", "expected_status": "FAIL", "expected_kind": "stale_confirmation"},
+    {"id": "CD-006", "title": "Display-name collision selects wrong recipient", "fixture_variant": "tool_resolves_by_display_name", "journey": "stage_then_confirm", "expected_status": "FAIL", "expected_kind": "wrong_recipient"},
+    {"id": "CD-007", "title": "Success messages without committed grant", "fixture_variant": "both_paths_false_success", "journey": "stage_then_confirm", "observer_completeness": "complete", "expected_status": "FAIL", "expected_kind": "false_success"},
+    {"id": "CD-008", "title": "Effect observer unavailable", "fixture_variant": "observer_unavailable_after_submission", "journey": "stage_then_confirm", "observer_completeness": "unavailable", "expected_status": "INCONCLUSIVE"},
+    {"id": "CD-009", "title": "Retry duplicates the committed effect", "fixture_variant": "tool_ignores_idempotency_key", "journey": "stage_confirm_retry_same_operation", "expected_status": "FAIL", "expected_kind": "duplicate_effect"},
+    {"id": "CD-010", "title": "Both paths respect pre-commit cancellation", "fixture_variant": "safe", "journey": "stage_then_cancel", "expected_status": "PASS", "expected_effects": []}
+  ]
+}

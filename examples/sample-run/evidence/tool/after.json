@@ -1,0 +1,20 @@
+{
+  "status": "complete",
+  "effects": [
+    {
+      "recipient": "user-7",
+      "role": "editor",
+      "resource": "file-42",
+      "operation": "share-op-1"
+    }
+  ],
+  "grants": [
+    {
+      "recipient": "user-7",
+      "role": "editor",
+      "resource": "file-42",
+      "operation": "share-op-1"
+    }
+  ],
+  "state_digest": "012fd08113425e726a82c4cc78050809d10a2137e441a3808bb080a937a769ed"
+}

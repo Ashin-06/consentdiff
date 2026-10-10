@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-10T16:58:40.396Z",
+  "url": "http://127.0.0.1:8767",
+  "checks": [
+    "Workbench loads live configuration and all ten scenarios without desktop overflow.",
+    "Seeded CD-002 shows the authoritative human viewer / tool editor mismatch as FAIL.",
+    "Reduction preserves the target violation and valid consent while reducing six actions to three.",
+    "HTML report, JSON case, and ZIP evidence bundle download successfully from the actual UI.",
+    "Repaired CD-002 passes with viewer effects on both paths and disables failure reduction.",
+    "CD-003 correctly reports FAIL when both paths agree on the wrong editor permission.",
+    "CD-008 treats missing observer evidence as INCONCLUSIVE, not a successful empty effect.",
+    "All ten seeded scenario expectations pass, explicitly including expected unsafe fixture outcomes.",
+    "All ten repaired-reference scenario expectations also pass through the UI.",
+    "The archive reopens the exact saved case with its original effects and status.",
+    "Real Stage → Confirm → Commit controls produce human viewer and tool editor in separate CD-002 app states.",
+    "Interactive controls do not commit the human path before approval or after cancellation.",
+    "Invalid repeat counts are blocked by the form before any experiment is submitted.",
+    "A real server validation error is shown as an alert and leaves the controls usable.",
+    "A successful retry clears the previous error and displays a fresh result.",
+    "Tabs support keyboard arrows, Home, End, selected state, and correct focus.",
+    "All four views fit a 390px viewport with no page overflow and no uncaught JavaScript errors."
+  ],
+  "errors": []
+}

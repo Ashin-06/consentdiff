@@ -1,0 +1,12 @@
+{
+  "actor": "file-owner",
+  "action": "share_file",
+  "resource": "file-42",
+  "recipient": "user-7",
+  "role": "viewer",
+  "operation": "share-op-1",
+  "confirmation_required": true,
+  "required_effect_count": 1,
+  "cancellation_semantics": "pre-commit cancellation prevents effects",
+  "changed_arguments_require_new_approval": true
+}

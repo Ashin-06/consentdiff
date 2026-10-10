@@ -1,0 +1,604 @@
+{
+  "case_id": "20261010T170007Z-97a39d647c",
+  "created_at": "2026-10-10T17:00:07.976358+00:00",
+  "tool_version": "1.0.0",
+  "config": {
+    "scenario_id": "CD-002",
+    "mode": "seeded",
+    "repeats": 2
+  },
+  "result": {
+    "scenario": {
+      "id": "CD-002",
+      "title": "Tool widens the role",
+      "variant": "tool_editor",
+      "journey": "confirm",
+      "expected_status": "FAIL",
+      "expected_kind": "overbroad_permission"
+    },
+    "mode": "seeded",
+    "intent": {
+      "actor": "file-owner",
+      "action": "share_file",
+      "resource": "file-42",
+      "recipient": "user-7",
+      "role": "viewer",
+      "operation": "share-op-1",
+      "confirmation_required": true,
+      "required_effect_count": 1,
+      "cancellation_semantics": "pre-commit cancellation prevents effects",
+      "changed_arguments_require_new_approval": true
+    },
+    "steps": [
+      "inspect",
+      "stage",
+      "inspect",
+      "confirm",
+      "commit",
+      "inspect"
+    ],
+    "journeys": {
+      "human": {
+        "driver": "human",
+        "adapter": "visible UI action controller",
+        "identity_mapping": {
+          "user-7": 81,
+          "user-8": 82
+        },
+        "before": {
+          "status": "complete",
+          "effects": [],
+          "grants": [],
+          "state_digest": "5fa11f862bfbb55c1152eea5c4d24ebd1a108f869fb371e8a36b1488d6c76c22"
+        },
+        "after": {
+          "status": "complete",
+          "effects": [
+            {
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ],
+          "grants": [
+            {
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ],
+          "state_digest": "9b571a4bf1aeee7f32b833016cbe1b389640a50e3113a5c36a3c99e4d16eb007"
+        },
+        "trace": [
+          {
+            "step": 1,
+            "action": "inspect",
+            "plan": null,
+            "approval": null,
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "inspect",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 2,
+            "action": "stage",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": null,
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "stage",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 3,
+            "action": "inspect",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": null,
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "inspect",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 4,
+            "action": "confirm",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1",
+              "decision": "confirm",
+              "expires_at": 200,
+              "token": "fixture-approval-1"
+            },
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "confirm",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 5,
+            "action": "commit",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1",
+              "decision": "confirm",
+              "expires_at": 200,
+              "token": "fixture-approval-1"
+            },
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "commit",
+              "message": "Shared successfully",
+              "committed": true
+            }
+          },
+          {
+            "step": 6,
+            "action": "inspect",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1",
+              "decision": "confirm",
+              "expires_at": 200,
+              "token": "fixture-approval-1"
+            },
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "inspect",
+              "message": "ok",
+              "committed": false
+            }
+          }
+        ],
+        "responses": [
+          {
+            "action": "inspect",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "stage",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "inspect",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "confirm",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "commit",
+            "message": "Shared successfully",
+            "committed": true
+          },
+          {
+            "action": "inspect",
+            "message": "ok",
+            "committed": false
+          }
+        ]
+      },
+      "tool": {
+        "driver": "tool",
+        "adapter": "structured tool action controller",
+        "identity_mapping": {
+          "user-7": 156,
+          "user-8": 157
+        },
+        "before": {
+          "status": "complete",
+          "effects": [],
+          "grants": [],
+          "state_digest": "5fa11f862bfbb55c1152eea5c4d24ebd1a108f869fb371e8a36b1488d6c76c22"
+        },
+        "after": {
+          "status": "complete",
+          "effects": [
+            {
+              "recipient": "user-7",
+              "role": "editor",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ],
+          "grants": [
+            {
+              "recipient": "user-7",
+              "role": "editor",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ],
+          "state_digest": "012fd08113425e726a82c4cc78050809d10a2137e441a3808bb080a937a769ed"
+        },
+        "trace": [
+          {
+            "step": 1,
+            "action": "inspect",
+            "plan": null,
+            "approval": null,
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "inspect",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 2,
+            "action": "stage",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": null,
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "stage",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 3,
+            "action": "inspect",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": null,
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "inspect",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 4,
+            "action": "confirm",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1",
+              "decision": "confirm",
+              "expires_at": 200,
+              "token": "fixture-approval-1"
+            },
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "confirm",
+              "message": "ok",
+              "committed": false
+            }
+          },
+          {
+            "step": 5,
+            "action": "commit",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1",
+              "decision": "confirm",
+              "expires_at": 200,
+              "token": "fixture-approval-1"
+            },
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "commit",
+              "message": "Shared successfully",
+              "committed": true
+            }
+          },
+          {
+            "step": 6,
+            "action": "inspect",
+            "plan": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1"
+            },
+            "approval": {
+              "actor": "file-owner",
+              "action": "share_file",
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "version": 1,
+              "operation": "share-op-1",
+              "decision": "confirm",
+              "expires_at": 200,
+              "token": "fixture-approval-1"
+            },
+            "cancelled": false,
+            "clock": 100,
+            "response": {
+              "action": "inspect",
+              "message": "ok",
+              "committed": false
+            }
+          }
+        ],
+        "responses": [
+          {
+            "action": "inspect",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "stage",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "inspect",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "confirm",
+            "message": "ok",
+            "committed": false
+          },
+          {
+            "action": "commit",
+            "message": "Shared successfully",
+            "committed": true
+          },
+          {
+            "action": "inspect",
+            "message": "ok",
+            "committed": false
+          }
+        ]
+      }
+    },
+    "baseline_equal": true,
+    "status": "FAIL",
+    "findings": [
+      {
+        "kind": "overbroad_permission",
+        "journey": "tool",
+        "expected": "viewer",
+        "actual": [
+          "editor"
+        ],
+        "evidence_ref": "tool/after.json"
+      },
+      {
+        "kind": "state_postcondition_violation",
+        "journey": "tool",
+        "expected": {
+          "effects": [
+            {
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ],
+          "grants": [
+            {
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ]
+        },
+        "actual": {
+          "effects": [
+            {
+              "recipient": "user-7",
+              "role": "editor",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ],
+          "grants": [
+            {
+              "recipient": "user-7",
+              "role": "editor",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ]
+        },
+        "evidence_ref": "tool/after.json"
+      },
+      {
+        "kind": "confirmation_violation",
+        "journey": "tool",
+        "expected": "every observed grant and effect has a current, uncancelled approval bound to its exact commit plan",
+        "actual": [
+          {
+            "recipient": "user-7",
+            "role": "editor",
+            "resource": "file-42",
+            "operation": "share-op-1"
+          },
+          {
+            "recipient": "user-7",
+            "role": "editor",
+            "resource": "file-42",
+            "operation": "share-op-1"
+          }
+        ],
+        "evidence_ref": "tool/after.json"
+      },
+      {
+        "kind": "path_divergence",
+        "journey": "paired",
+        "expected": "equivalent authorized effects",
+        "actual": {
+          "human": [
+            {
+              "recipient": "user-7",
+              "role": "viewer",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ],
+          "tool": [
+            {
+              "recipient": "user-7",
+              "role": "editor",
+              "resource": "file-42",
+              "operation": "share-op-1"
+            }
+          ]
+        },
+        "evidence_ref": "paired after states"
+      }
+    ],
+    "parity": false,
+    "observer_complete": true,
+    "baseline_clean": true,
+    "intent_satisfied": false,
+    "ignored_fields": [
+      "physical SQLite user ID (explicit setup mapping)",
+      "display label"
+    ],
+    "required_effect_count": 1,
+    "scope": "Controlled SQLite file-sharing application; controller-level UI adapter and structured tool adapter",
+    "limitations": [
+      "Only the included fictional file-sharing application is tested; no arbitrary sites or native WebMCP support.",
+      "The paired runner drives the human action controller directly. Optional browser QA tests the visible demo separately.",
+      "The observer reads SQLite through a separate read-only connection; it is logically independent, not a separate trusted machine.",
+      "Confirmation tokens, identities, time and scheduling are deterministic fixtures; no authentication or cryptographic assurance is claimed.",
+      "Reduction is 1-minimal over valid single-step deletions, not a globally shortest trace or a search over arbitrary workflows."
+    ],
+    "repeats": 2,
+    "repeat_consistent": true,
+    "witness_matches": true
+  },
+  "artifacts": {
+    "report": "/api/cases/20261010T170007Z-97a39d647c/report",
+    "json": "/api/cases/20261010T170007Z-97a39d647c/json",
+    "bundle": "/api/cases/20261010T170007Z-97a39d647c/bundle"
+  }
+}

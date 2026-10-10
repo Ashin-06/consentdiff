@@ -1,0 +1,18 @@
+{
+  "algorithm": "sha256",
+  "case_id": "20261010T170007Z-97a39d647c",
+  "tool_version": "1.0.0",
+  "files": {
+    "case.json": "e14e99925bed7ec8cbc69d3c724aa306c095c73c574fa1fb0c4f3d1044d6ee2a",
+    "evidence/human/after.json": "3b24dc67f593ac48a147d0118fbe7794ff36f5c8c8415970efa698feb3953bd9",
+    "evidence/human/application.sqlite": "f7b60072ced35de31d9ae8fada00769fe798fe9e74087c7dd695b7aea541b734",
+    "evidence/human/before.json": "0713edd8a128f6553cba762c5d5adf04c06fa571970940517cbcff0f9795e11e",
+    "evidence/human/trace.json": "a6c0108f0c46b3781e4af26e7a0d39824ee3d847cc3324c817b21ee15aea214f",
+    "evidence/intent.json": "b913b9a1dc66188391022617435a596f968e4b4f961dee83f8433aa13069cb9e",
+    "evidence/tool/after.json": "64fbb43f69b4753a55bf26dda1bee914af3fcb651d1d670a7e0e110078aacb16",
+    "evidence/tool/application.sqlite": "24cf3640234149cad96936302ff508879d1a6103d0b74dd7fb103155b6d751ac",
+    "evidence/tool/before.json": "0713edd8a128f6553cba762c5d5adf04c06fa571970940517cbcff0f9795e11e",
+    "evidence/tool/trace.json": "a6c0108f0c46b3781e4af26e7a0d39824ee3d847cc3324c817b21ee15aea214f",
+    "report.html": "898afd4a6bb0107e288332ad59ca61c8d0901b4f58b8d2ab00f9885e2f48b346"
+  }
+}

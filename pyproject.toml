@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "consentdiff-lab"
+version = "1.0.0"
+description = "Human and tool workflow consistency reference laboratory"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+consentdiff = "consentdiff.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["consentdiff*"]
+
+[tool.setuptools.package-data]
+consentdiff = ["static/*"]

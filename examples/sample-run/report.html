@@ -1,0 +1,455 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ConsentDiff evidence report</title><style>body{background:#101522;color:#e8eef7;font:16px/1.6 system-ui;max-width:1100px;margin:40px auto;padding:0 20px}h1{font-size:36px;color:#c8b9ff}section{background:#192031;padding:24px;border-radius:12px;margin:18px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:700px){.pair{display:block}}</style><p>CONSENTDIFF / LOCAL INTENT & EFFECT LAB</p><h1>FAIL · Tool widens the role</h1><p>20261010T170007Z-97a39d647c · 2026-10-10T17:00:07.976358+00:00</p><p>Controller-level paired workflow test. The human adapter shares the visible demo controller; this report is not evidence of a browser-driven journey or native WebMCP validation.</p><section><h2>Frozen intent</h2><pre>{
+  &quot;actor&quot;: &quot;file-owner&quot;,
+  &quot;action&quot;: &quot;share_file&quot;,
+  &quot;resource&quot;: &quot;file-42&quot;,
+  &quot;recipient&quot;: &quot;user-7&quot;,
+  &quot;role&quot;: &quot;viewer&quot;,
+  &quot;operation&quot;: &quot;share-op-1&quot;,
+  &quot;confirmation_required&quot;: true,
+  &quot;required_effect_count&quot;: 1,
+  &quot;cancellation_semantics&quot;: &quot;pre-commit cancellation prevents effects&quot;,
+  &quot;changed_arguments_require_new_approval&quot;: true
+}</pre></section><section><h2>Findings</h2><pre>[
+  {
+    &quot;kind&quot;: &quot;overbroad_permission&quot;,
+    &quot;journey&quot;: &quot;tool&quot;,
+    &quot;expected&quot;: &quot;viewer&quot;,
+    &quot;actual&quot;: [
+      &quot;editor&quot;
+    ],
+    &quot;evidence_ref&quot;: &quot;tool/after.json&quot;
+  },
+  {
+    &quot;kind&quot;: &quot;state_postcondition_violation&quot;,
+    &quot;journey&quot;: &quot;tool&quot;,
+    &quot;expected&quot;: {
+      &quot;effects&quot;: [
+        {
+          &quot;recipient&quot;: &quot;user-7&quot;,
+          &quot;role&quot;: &quot;viewer&quot;,
+          &quot;resource&quot;: &quot;file-42&quot;,
+          &quot;operation&quot;: &quot;share-op-1&quot;
+        }
+      ],
+      &quot;grants&quot;: [
+        {
+          &quot;recipient&quot;: &quot;user-7&quot;,
+          &quot;role&quot;: &quot;viewer&quot;,
+          &quot;resource&quot;: &quot;file-42&quot;,
+          &quot;operation&quot;: &quot;share-op-1&quot;
+        }
+      ]
+    },
+    &quot;actual&quot;: {
+      &quot;effects&quot;: [
+        {
+          &quot;recipient&quot;: &quot;user-7&quot;,
+          &quot;role&quot;: &quot;editor&quot;,
+          &quot;resource&quot;: &quot;file-42&quot;,
+          &quot;operation&quot;: &quot;share-op-1&quot;
+        }
+      ],
+      &quot;grants&quot;: [
+        {
+          &quot;recipient&quot;: &quot;user-7&quot;,
+          &quot;role&quot;: &quot;editor&quot;,
+          &quot;resource&quot;: &quot;file-42&quot;,
+          &quot;operation&quot;: &quot;share-op-1&quot;
+        }
+      ]
+    },
+    &quot;evidence_ref&quot;: &quot;tool/after.json&quot;
+  },
+  {
+    &quot;kind&quot;: &quot;confirmation_violation&quot;,
+    &quot;journey&quot;: &quot;tool&quot;,
+    &quot;expected&quot;: &quot;every observed grant and effect has a current, uncancelled approval bound to its exact commit plan&quot;,
+    &quot;actual&quot;: [
+      {
+        &quot;recipient&quot;: &quot;user-7&quot;,
+        &quot;role&quot;: &quot;editor&quot;,
+        &quot;resource&quot;: &quot;file-42&quot;,
+        &quot;operation&quot;: &quot;share-op-1&quot;
+      },
+      {
+        &quot;recipient&quot;: &quot;user-7&quot;,
+        &quot;role&quot;: &quot;editor&quot;,
+        &quot;resource&quot;: &quot;file-42&quot;,
+        &quot;operation&quot;: &quot;share-op-1&quot;
+      }
+    ],
+    &quot;evidence_ref&quot;: &quot;tool/after.json&quot;
+  },
+  {
+    &quot;kind&quot;: &quot;path_divergence&quot;,
+    &quot;journey&quot;: &quot;paired&quot;,
+    &quot;expected&quot;: &quot;equivalent authorized effects&quot;,
+    &quot;actual&quot;: {
+      &quot;human&quot;: [
+        {
+          &quot;recipient&quot;: &quot;user-7&quot;,
+          &quot;role&quot;: &quot;viewer&quot;,
+          &quot;resource&quot;: &quot;file-42&quot;,
+          &quot;operation&quot;: &quot;share-op-1&quot;
+        }
+      ],
+      &quot;tool&quot;: [
+        {
+          &quot;recipient&quot;: &quot;user-7&quot;,
+          &quot;role&quot;: &quot;editor&quot;,
+          &quot;resource&quot;: &quot;file-42&quot;,
+          &quot;operation&quot;: &quot;share-op-1&quot;
+        }
+      ]
+    },
+    &quot;evidence_ref&quot;: &quot;paired after states&quot;
+  }
+]</pre></section><div class="pair"><section><h2>Human · observed effects</h2><pre>{
+  &quot;status&quot;: &quot;complete&quot;,
+  &quot;effects&quot;: [
+    {
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    }
+  ],
+  &quot;grants&quot;: [
+    {
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    }
+  ],
+  &quot;state_digest&quot;: &quot;9b571a4bf1aeee7f32b833016cbe1b389640a50e3113a5c36a3c99e4d16eb007&quot;
+}</pre></section><section><h2>Tool · observed effects</h2><pre>{
+  &quot;status&quot;: &quot;complete&quot;,
+  &quot;effects&quot;: [
+    {
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;editor&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    }
+  ],
+  &quot;grants&quot;: [
+    {
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;editor&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    }
+  ],
+  &quot;state_digest&quot;: &quot;012fd08113425e726a82c4cc78050809d10a2137e441a3808bb080a937a769ed&quot;
+}</pre></section></div><section><h2>Human · action and confirmation record</h2><pre>[
+  {
+    &quot;step&quot;: 1,
+    &quot;action&quot;: &quot;inspect&quot;,
+    &quot;plan&quot;: null,
+    &quot;approval&quot;: null,
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;inspect&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 2,
+    &quot;action&quot;: &quot;stage&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: null,
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;stage&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 3,
+    &quot;action&quot;: &quot;inspect&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: null,
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;inspect&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 4,
+    &quot;action&quot;: &quot;confirm&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;,
+      &quot;decision&quot;: &quot;confirm&quot;,
+      &quot;expires_at&quot;: 200,
+      &quot;token&quot;: &quot;fixture-approval-1&quot;
+    },
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;confirm&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 5,
+    &quot;action&quot;: &quot;commit&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;,
+      &quot;decision&quot;: &quot;confirm&quot;,
+      &quot;expires_at&quot;: 200,
+      &quot;token&quot;: &quot;fixture-approval-1&quot;
+    },
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;commit&quot;,
+      &quot;message&quot;: &quot;Shared successfully&quot;,
+      &quot;committed&quot;: true
+    }
+  },
+  {
+    &quot;step&quot;: 6,
+    &quot;action&quot;: &quot;inspect&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;,
+      &quot;decision&quot;: &quot;confirm&quot;,
+      &quot;expires_at&quot;: 200,
+      &quot;token&quot;: &quot;fixture-approval-1&quot;
+    },
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;inspect&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  }
+]</pre></section><section><h2>Tool · action and confirmation record</h2><pre>[
+  {
+    &quot;step&quot;: 1,
+    &quot;action&quot;: &quot;inspect&quot;,
+    &quot;plan&quot;: null,
+    &quot;approval&quot;: null,
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;inspect&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 2,
+    &quot;action&quot;: &quot;stage&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: null,
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;stage&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 3,
+    &quot;action&quot;: &quot;inspect&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: null,
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;inspect&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 4,
+    &quot;action&quot;: &quot;confirm&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;,
+      &quot;decision&quot;: &quot;confirm&quot;,
+      &quot;expires_at&quot;: 200,
+      &quot;token&quot;: &quot;fixture-approval-1&quot;
+    },
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;confirm&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  },
+  {
+    &quot;step&quot;: 5,
+    &quot;action&quot;: &quot;commit&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;,
+      &quot;decision&quot;: &quot;confirm&quot;,
+      &quot;expires_at&quot;: 200,
+      &quot;token&quot;: &quot;fixture-approval-1&quot;
+    },
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;commit&quot;,
+      &quot;message&quot;: &quot;Shared successfully&quot;,
+      &quot;committed&quot;: true
+    }
+  },
+  {
+    &quot;step&quot;: 6,
+    &quot;action&quot;: &quot;inspect&quot;,
+    &quot;plan&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;actor&quot;: &quot;file-owner&quot;,
+      &quot;action&quot;: &quot;share_file&quot;,
+      &quot;recipient&quot;: &quot;user-7&quot;,
+      &quot;role&quot;: &quot;viewer&quot;,
+      &quot;resource&quot;: &quot;file-42&quot;,
+      &quot;version&quot;: 1,
+      &quot;operation&quot;: &quot;share-op-1&quot;,
+      &quot;decision&quot;: &quot;confirm&quot;,
+      &quot;expires_at&quot;: 200,
+      &quot;token&quot;: &quot;fixture-approval-1&quot;
+    },
+    &quot;cancelled&quot;: false,
+    &quot;clock&quot;: 100,
+    &quot;response&quot;: {
+      &quot;action&quot;: &quot;inspect&quot;,
+      &quot;message&quot;: &quot;ok&quot;,
+      &quot;committed&quot;: false
+    }
+  }
+]</pre></section><section><h2>Scope and limitations</h2><pre>[
+  &quot;Only the included fictional file-sharing application is tested; no arbitrary sites or native WebMCP support.&quot;,
+  &quot;The paired runner drives the human action controller directly. Optional browser QA tests the visible demo separately.&quot;,
+  &quot;The observer reads SQLite through a separate read-only connection; it is logically independent, not a separate trusted machine.&quot;,
+  &quot;Confirmation tokens, identities, time and scheduling are deterministic fixtures; no authentication or cryptographic assurance is claimed.&quot;,
+  &quot;Reduction is 1-minimal over valid single-step deletions, not a globally shortest trace or a search over arbitrary workflows.&quot;
+]</pre></section><p>The unsigned SHA-256 manifest checks integrity relative to its hashes, not authenticity or proof of execution.</p></html>
