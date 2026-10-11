@@ -7,3 +7,6 @@ runs/
 build/
 dist/
 *.zip
+node_modules/
+playwright-report/
+test-results/

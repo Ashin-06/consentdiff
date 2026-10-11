@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "fixture": "consentdiff-owned-local-app",
+  "scenarios": [
+    {"id": "CD-001"}, {"id": "CD-002"}, {"id": "CD-003"},
+    {"id": "CD-004"}, {"id": "CD-005"}, {"id": "CD-006"},
+    {"id": "CD-007"}, {"id": "CD-008"}, {"id": "CD-009"}, {"id": "CD-010"}
+  ],
+  "modes": ["seeded", "repaired"],
+  "repeats": 2,
+  "tool_adapter": "native",
+  "webmcp_testing": true
+}

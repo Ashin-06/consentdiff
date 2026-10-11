@@ -63,13 +63,13 @@ python -m consentdiff verify runs/<actual-case-id>
 
 Then copy that run to a disposable location, change one covered file, and confirm verification rejects the modified copy. Keep the original result intact.
 
-Bundle export verifies before producing the archive. The manifest covers 11 content files; its unsigned hashes establish consistency with the manifest, not trusted origin.
+Bundle export verifies before producing the archive. Controller manifests cover 11 content files; browser manifests cover the additional evidence from every repeat; its unsigned hashes establish consistency with the manifest, not trusted origin.
 
 ## Browser validation
 
 Separate browser checks can exercise the four workbench tabs, run and display a paired experiment, use the manual Stage/Confirm/Commit controls, inspect cancellation, reopen an archived case, and download evidence.
 
-These checks do not turn the automated paired suite into a browser-driven suite. The runner still calls the same action controller directly. Native WebMCP and external websites remain untested.
+The workbench checks are separate from the real paired browser suites. Run `python -m consentdiff browser-run --config examples/test-config.json` and repeat with `examples/native-config.json` to execute all ten scenarios in both modes with two fresh repeats. Native support must be available or the command returns an explicit error. Preserve each runtime/capability record and verify every saved case. External websites remain outside scope.
 
 ## Metrics appropriate to publish
 

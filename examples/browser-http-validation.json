@@ -1,0 +1,718 @@
+{
+  "status": "PASS",
+  "execution": "browser",
+  "browser_version": "154.0.8037.99",
+  "config": {
+    "schema_version": "1.0",
+    "fixture": "consentdiff-owned-local-app",
+    "scenarios": [
+      {
+        "id": "CD-001",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-002",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-003",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-004",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "cancel",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-005",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "change_role",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-006",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-007",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-008",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-009",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "retry",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-010",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "cancel",
+          "commit",
+          "inspect"
+        ]
+      }
+    ],
+    "modes": [
+      "seeded",
+      "repaired"
+    ],
+    "repeats": 2,
+    "tool_adapter": "http",
+    "webmcp_testing": false
+  },
+  "summary": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "results": [
+    {
+      "id": "CD-001",
+      "mode": "seeded",
+      "title": "Correct viewer share",
+      "case_id": "20261011T003112Z-24e63eebb7",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003112Z-24e63eebb7/report",
+        "json": "/api/cases/20261011T003112Z-24e63eebb7/json",
+        "bundle": "/api/cases/20261011T003112Z-24e63eebb7/bundle"
+      }
+    },
+    {
+      "id": "CD-002",
+      "mode": "seeded",
+      "title": "Tool widens the role",
+      "case_id": "20261011T003114Z-139c6205de",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003114Z-139c6205de/report",
+        "json": "/api/cases/20261011T003114Z-139c6205de/json",
+        "bundle": "/api/cases/20261011T003114Z-139c6205de/bundle"
+      }
+    },
+    {
+      "id": "CD-003",
+      "mode": "seeded",
+      "title": "Both paths agree but violate intent",
+      "case_id": "20261011T003117Z-96ae27a116",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "intent_violation"
+      ],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003117Z-96ae27a116/report",
+        "json": "/api/cases/20261011T003117Z-96ae27a116/json",
+        "bundle": "/api/cases/20261011T003117Z-96ae27a116/bundle"
+      }
+    },
+    {
+      "id": "CD-004",
+      "mode": "seeded",
+      "title": "Tool commits after cancellation",
+      "case_id": "20261011T003121Z-d9a3d3260a",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "cancellation_violation",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003121Z-d9a3d3260a/report",
+        "json": "/api/cases/20261011T003121Z-d9a3d3260a/json",
+        "bundle": "/api/cases/20261011T003121Z-d9a3d3260a/bundle"
+      }
+    },
+    {
+      "id": "CD-005",
+      "mode": "seeded",
+      "title": "Old approval reused after role change",
+      "case_id": "20261011T003123Z-5ecd47d0d7",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "stale_confirmation",
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003123Z-5ecd47d0d7/report",
+        "json": "/api/cases/20261011T003123Z-5ecd47d0d7/json",
+        "bundle": "/api/cases/20261011T003123Z-5ecd47d0d7/bundle"
+      }
+    },
+    {
+      "id": "CD-006",
+      "mode": "seeded",
+      "title": "Display-name collision picks wrong user",
+      "case_id": "20261011T003125Z-f2176cd481",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "wrong_recipient",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003125Z-f2176cd481/report",
+        "json": "/api/cases/20261011T003125Z-f2176cd481/json",
+        "bundle": "/api/cases/20261011T003125Z-f2176cd481/bundle"
+      }
+    },
+    {
+      "id": "CD-007",
+      "mode": "seeded",
+      "title": "Success reported without a grant",
+      "case_id": "20261011T003127Z-e0f4c9afc1",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "false_success",
+        "state_postcondition_violation",
+        "false_success",
+        "state_postcondition_violation",
+        "intent_violation"
+      ],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003127Z-e0f4c9afc1/report",
+        "json": "/api/cases/20261011T003127Z-e0f4c9afc1/json",
+        "bundle": "/api/cases/20261011T003127Z-e0f4c9afc1/bundle"
+      }
+    },
+    {
+      "id": "CD-008",
+      "mode": "seeded",
+      "title": "Effect observer unavailable",
+      "case_id": "20261011T003131Z-6d661828f2",
+      "expected_status": "INCONCLUSIVE",
+      "observed_status": "INCONCLUSIVE",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003131Z-6d661828f2/report",
+        "json": "/api/cases/20261011T003131Z-6d661828f2/json",
+        "bundle": "/api/cases/20261011T003131Z-6d661828f2/bundle"
+      }
+    },
+    {
+      "id": "CD-009",
+      "mode": "seeded",
+      "title": "Retry duplicates the operation",
+      "case_id": "20261011T003133Z-c40210e27b",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "duplicate_effect",
+        "state_postcondition_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003133Z-c40210e27b/report",
+        "json": "/api/cases/20261011T003133Z-c40210e27b/json",
+        "bundle": "/api/cases/20261011T003133Z-c40210e27b/bundle"
+      }
+    },
+    {
+      "id": "CD-010",
+      "mode": "seeded",
+      "title": "Both paths respect cancellation",
+      "case_id": "20261011T003135Z-81eeb53a87",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003135Z-81eeb53a87/report",
+        "json": "/api/cases/20261011T003135Z-81eeb53a87/json",
+        "bundle": "/api/cases/20261011T003135Z-81eeb53a87/bundle"
+      }
+    },
+    {
+      "id": "CD-001",
+      "mode": "repaired",
+      "title": "Correct viewer share",
+      "case_id": "20261011T003138Z-96c125820b",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003138Z-96c125820b/report",
+        "json": "/api/cases/20261011T003138Z-96c125820b/json",
+        "bundle": "/api/cases/20261011T003138Z-96c125820b/bundle"
+      }
+    },
+    {
+      "id": "CD-002",
+      "mode": "repaired",
+      "title": "Tool widens the role",
+      "case_id": "20261011T003140Z-920695863e",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003140Z-920695863e/report",
+        "json": "/api/cases/20261011T003140Z-920695863e/json",
+        "bundle": "/api/cases/20261011T003140Z-920695863e/bundle"
+      }
+    },
+    {
+      "id": "CD-003",
+      "mode": "repaired",
+      "title": "Both paths agree but violate intent",
+      "case_id": "20261011T003142Z-d09e6e8aee",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003142Z-d09e6e8aee/report",
+        "json": "/api/cases/20261011T003142Z-d09e6e8aee/json",
+        "bundle": "/api/cases/20261011T003142Z-d09e6e8aee/bundle"
+      }
+    },
+    {
+      "id": "CD-004",
+      "mode": "repaired",
+      "title": "Tool commits after cancellation",
+      "case_id": "20261011T003144Z-ebd9e2a1d6",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003144Z-ebd9e2a1d6/report",
+        "json": "/api/cases/20261011T003144Z-ebd9e2a1d6/json",
+        "bundle": "/api/cases/20261011T003144Z-ebd9e2a1d6/bundle"
+      }
+    },
+    {
+      "id": "CD-005",
+      "mode": "repaired",
+      "title": "Old approval reused after role change",
+      "case_id": "20261011T003147Z-d458abdf17",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003147Z-d458abdf17/report",
+        "json": "/api/cases/20261011T003147Z-d458abdf17/json",
+        "bundle": "/api/cases/20261011T003147Z-d458abdf17/bundle"
+      }
+    },
+    {
+      "id": "CD-006",
+      "mode": "repaired",
+      "title": "Display-name collision picks wrong user",
+      "case_id": "20261011T003151Z-6a55b6fe51",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003151Z-6a55b6fe51/report",
+        "json": "/api/cases/20261011T003151Z-6a55b6fe51/json",
+        "bundle": "/api/cases/20261011T003151Z-6a55b6fe51/bundle"
+      }
+    },
+    {
+      "id": "CD-007",
+      "mode": "repaired",
+      "title": "Success reported without a grant",
+      "case_id": "20261011T003153Z-99b1e7d6ff",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003153Z-99b1e7d6ff/report",
+        "json": "/api/cases/20261011T003153Z-99b1e7d6ff/json",
+        "bundle": "/api/cases/20261011T003153Z-99b1e7d6ff/bundle"
+      }
+    },
+    {
+      "id": "CD-008",
+      "mode": "repaired",
+      "title": "Effect observer unavailable",
+      "case_id": "20261011T003155Z-88e0633f54",
+      "expected_status": "INCONCLUSIVE",
+      "observed_status": "INCONCLUSIVE",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003155Z-88e0633f54/report",
+        "json": "/api/cases/20261011T003155Z-88e0633f54/json",
+        "bundle": "/api/cases/20261011T003155Z-88e0633f54/bundle"
+      }
+    },
+    {
+      "id": "CD-009",
+      "mode": "repaired",
+      "title": "Retry duplicates the operation",
+      "case_id": "20261011T003157Z-7e3485f8f8",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003157Z-7e3485f8f8/report",
+        "json": "/api/cases/20261011T003157Z-7e3485f8f8/json",
+        "bundle": "/api/cases/20261011T003157Z-7e3485f8f8/bundle"
+      }
+    },
+    {
+      "id": "CD-010",
+      "mode": "repaired",
+      "title": "Both paths respect cancellation",
+      "case_id": "20261011T003201Z-206a607f7f",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "structured-http",
+      "native": {
+        "status": "unsupported",
+        "surface": null,
+        "secure_context": true,
+        "registered": false,
+        "discovered": false,
+        "invocations": 0,
+        "reason": "document.modelContext is unavailable in this browser configuration.",
+        "testing_flag": false
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003201Z-206a607f7f/report",
+        "json": "/api/cases/20261011T003201Z-206a607f7f/json",
+        "bundle": "/api/cases/20261011T003201Z-206a607f7f/bundle"
+      }
+    }
+  ],
+  "errors": [],
+  "interpretation": "Suite PASS means the real browser journeys matched expected fixture outcomes, including intentional failures and unknown evidence."
+}

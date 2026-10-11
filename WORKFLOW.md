@@ -1,6 +1,6 @@
 # Complete workflow — inspect a viewer/editor mismatch
 
-All actions below use fictional data. The paired experiment runs controller adapters; the separate manual demo lets you use the visible local controls.
+All actions below use fictional data. The fast paired experiment runs controller adapters; the manual demo exposes the same controls. **Run in Chrome** executes the selected journey through actual rendered controls paired with HTTP or native WebMCP tools. **Run all 10 in Chrome** executes the catalogue in the selected mode. See [BROWSER_INTEGRATION.md](BROWSER_INTEGRATION.md) for the full seeded/repaired browser commands.
 
 ## 1. Start ConsentDiff
 
@@ -28,7 +28,7 @@ inspect -> stage -> inspect -> confirm -> commit -> inspect
 
 The human adapter and tool adapter execute this trace against their own application controllers. Each step records its plan, approval, cancellation state, and response.
 
-This stage does not drive a browser. The visible controls use the same controller but are exercised separately.
+This description applies to the fast controller runner. The browser runner instead clicks the rendered human controls and invokes the selected real tool transport, saving browser captures and authoritative observations for every repeat. Browser cases are labelled in the result and archive and cannot use the controller-only reducer.
 
 ## 4. Observe actual stored effects
 

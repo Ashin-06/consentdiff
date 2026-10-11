@@ -10,7 +10,7 @@ These controls support a local development tool. There is no user authentication
 
 ## Fixtures and drivers
 
-Human and tool paths use separate SQLite stores with synthetic recipients, plans, approvals, and effects. The paired runner calls application controllers directly. The manual browser demo uses the same controller through a local API.
+Human and tool paths use separate SQLite stores with synthetic recipients, plans, approvals, and effects. The fast runner calls controllers directly; the browser runner uses visible Chrome controls paired with HTTP or actual native WebMCP. It blocks browser requests outside its one owned loopback origin. Driver and evidence capabilities are separate, and backend finalization recomputes effects from its own databases.
 
 Approval tokens, identity, time, and scheduling are fixtures, not cryptographic or production authentication mechanisms. The fixed file-sharing intent is not an authorization to perform real actions.
 
@@ -24,7 +24,7 @@ A malicious operator with control over the application, observer, and evidence c
 
 Saved evidence includes fictional identities, fixed fixture approval tokens, traces, before/after observations, and final application databases. The synthetic tokens have no external authority. Do not replace these fixtures with real credentials or customer records.
 
-The exported witness is a fresh replay checked against repeated-run output. It is not the original database from every repeat. Hash manifests detect changes relative to their contents but are unsigned; rewriting both manifest and content is outside the authenticity guarantee.
+Controller exports contain a fresh replay checked against repeated-run output. Browser exports retain the actual databases, captures, receipts and screenshots from every repeat. A modified runner can fabricate capture metadata: this is internal correlation within one trusted local environment, not remote attestation. Hash manifests detect changes relative to their contents but are unsigned; rewriting both manifest and content is outside the authenticity guarantee.
 
 ## Temporary interactive sessions
 
@@ -38,9 +38,9 @@ The tester does not retry a cancelled real-world operation because it never perf
 
 ## Future integrations
 
-A future browser or external-service adapter would need reviewed permissions, isolated accounts, explicit effect observation, redaction, and retention controls. Screenshots, accessibility trees, and traces may contain sensitive data in such systems. Those integration requirements are not satisfied merely by the local prototype.
+A future external-application or service adapter would need reviewed permissions, isolated accounts, explicit effect observation, redaction, and retention controls. Screenshots, accessibility trees, and traces may contain sensitive data in such systems. Those integration requirements are not satisfied merely by the local prototype.
 
-See [INTEGRATION_ROADMAP.md](INTEGRATION_ROADMAP.md) for the unimplemented larger design.
+See [BROWSER_INTEGRATION.md](BROWSER_INTEGRATION.md) for the delivered browser boundary and [INTEGRATION_ROADMAP.md](INTEGRATION_ROADMAP.md) for remaining external-application work.
 
 ## Claims
 

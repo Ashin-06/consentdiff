@@ -16,4 +16,4 @@ consentdiff = "consentdiff.cli:main"
 include = ["consentdiff*"]
 
 [tool.setuptools.package-data]
-consentdiff = ["static/*"]
+consentdiff = ["static/*", "browser_runner.cjs"]

@@ -9,6 +9,9 @@ from urllib.parse import urlsplit
 from .evidence import bundle_case, case_path, list_cases, load_case, run_case, verify_case
 from .core import catalog, minimize, run_suite
 from .sandbox import Sandbox
+from .browser_sessions import BrowserSessions
+from .browser import BrowserJobs
+from .evidence import save_browser_case
 
 MAX_BODY = 1024 * 1024
 
@@ -18,6 +21,8 @@ def create_server(port=8767, runs_dir='runs'):
     static = Path(__file__).with_name('static')
     lock = threading.Lock()
     sandbox = Sandbox()
+    browser_sessions = BrowserSessions()
+    browser_jobs = BrowserJobs()
 
     class Handler(BaseHTTPRequestHandler):
         server_version = 'ConsentDiff/1.0'
@@ -52,16 +57,18 @@ def create_server(port=8767, runs_dir='runs'):
                 return self._send(403, {'error': 'Only localhost requests are accepted.'})
             path = urlsplit(self.path).path
             try:
-                if path in ('/', '/index.html', '/styles.css', '/app.js'):
+                if path in ('/', '/index.html', '/styles.css', '/app.js', '/driver.html', '/driver.js'):
                     name = 'index.html' if path == '/' else path[1:]
-                    mime = {'index.html': 'text/html; charset=utf-8', 'styles.css': 'text/css; charset=utf-8', 'app.js': 'text/javascript; charset=utf-8'}[name]
+                    mime = 'text/html; charset=utf-8' if name.endswith('.html') else 'text/javascript; charset=utf-8' if name.endswith('.js') else 'text/css; charset=utf-8'
                     return self._send(200, (static / name).read_bytes(), mime)
                 if path == '/api/health':
-                    return self._send(200, {'status': 'ok', 'scope': 'controlled SQLite human/tool consistency lab'})
+                    return self._send(200, {'status': 'ok', 'application': 'consentdiff', 'scope': 'owned local SQLite human/tool consistency lab'})
                 if path == '/api/demo':
                     return self._send(200, {'modes': ['seeded', 'repaired'], 'scenarios': catalog()})
                 if path == '/api/cases':
                     return self._send(200, {'cases': list_cases(root)})
+                if path.startswith('/api/browser/jobs/'):
+                    return self._send(200, browser_jobs.get(path.rsplit('/', 1)[-1]))
                 pieces = path.strip('/').split('/')
                 if len(pieces) == 4 and pieces[:2] == ['api', 'cases']:
                     case_id, kind = pieces[2:]
@@ -101,11 +108,26 @@ def create_server(port=8767, runs_dir='runs'):
                 if not isinstance(data, dict):
                     raise ValueError('JSON body must be an object.')
                 path = urlsplit(self.path).path
-                if path not in ('/api/run', '/api/minimize', '/api/suite', '/api/sandbox/start', '/api/sandbox/action'):
+                if path not in ('/api/run', '/api/minimize', '/api/suite', '/api/sandbox/start', '/api/sandbox/action', '/api/browser/start', '/api/browser/view', '/api/browser/action', '/api/browser/finish', '/api/browser/abort', '/api/browser/job'):
                     return self._send(404, {'error': 'Not found.'})
+                if path == '/api/browser/job':
+                    return self._send(202, browser_jobs.start(f'http://127.0.0.1:{self.server.server_port}', data))
                 if not lock.acquire(blocking=False):
                     return self._send(409, {'error': 'Another experiment is running. Wait for it to finish.'})
                 try:
+                    if path == '/api/browser/start':
+                        return self._send(200, browser_sessions.start(data))
+                    if path == '/api/browser/abort':
+                        return self._send(200, browser_sessions.abort(data))
+                    if path == '/api/browser/view':
+                        return self._send(200, browser_sessions.view(data))
+                    if path == '/api/browser/action':
+                        return self._send(200, browser_sessions.action(data))
+                    if path == '/api/browser/finish':
+                        prepared = browser_sessions.prepare_finish(data)
+                        case = save_browser_case(root, prepared)
+                        browser_sessions.close_ids([t['session_id'] for t in prepared])
+                        return self._send(200, case)
                     mode = data.get('mode', 'seeded')
                     scenario_id = data.get('scenario_id', 'CD-002')
                     if path == '/api/suite':
@@ -132,6 +154,7 @@ def create_server(port=8767, runs_dir='runs'):
         def server_close(self):
             super().server_close()
             sandbox.close()
+            browser_sessions.close()
 
     return LocalServer(('127.0.0.1', port), Handler)
 

@@ -14,6 +14,10 @@ def main(argv=None):
     serve.add_argument('--port', type=int, default=8767)
     serve.add_argument('--runs-dir', default='runs')
     commands.add_parser('catalog')
+    browser = commands.add_parser('browser-run', help='Run real Chrome controls against the owned disposable local application')
+    browser.add_argument('--config', default='examples/test-config.json')
+    browser.add_argument('--output-dir', default='runs')
+    browser.add_argument('--summary', help='Save the browser suite summary as JSON')
     for name in ('run', 'minimize', 'suite'):
         sub = commands.add_parser(name)
         sub.add_argument('--mode', choices=['seeded', 'repaired'], default='seeded')
@@ -37,6 +41,26 @@ def main(argv=None):
             return 0
         if args.command == 'catalog':
             output, status = catalog(), 'PASS'
+        elif args.command == 'browser-run':
+            import threading
+            from .browser import run_browser
+            from .config import load_config
+            from .server import create_server
+            config = load_config(args.config)
+            server = create_server(0, args.output_dir)
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                output = run_browser(f'http://127.0.0.1:{server.server_port}', config)
+                status = output['status']
+                if args.summary:
+                    destination = Path(args.summary)
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    destination.write_text(json.dumps(output, indent=2) + '\n', encoding='utf-8')
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=5)
         elif args.command == 'run':
             output = run_case(args.output_dir, args.scenario, args.mode, args.repeats)
             status = output['result']['status']

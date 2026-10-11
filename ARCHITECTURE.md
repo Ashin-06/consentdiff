@@ -1,4 +1,4 @@
-# Architecture — delivered local reference
+# Architecture — reference and real browser runners
 
 ConsentDiff checks three things: the declared action, the records of its approval and execution, and the state actually stored by two fictional application paths. Both paths must satisfy the contract; matching each other is insufficient.
 
@@ -8,7 +8,11 @@ ConsentDiff checks three things: the declared action, the records of its approva
 consentdiff/
   __init__.py              # package version
   __main__.py              # module entry point
-  cli.py                   # serve/catalog/run/suite/minimize/verify/bundle
+  cli.py                   # reference commands and browser-run
+  config.py                # strict executable scenario configuration
+  browser.py               # Node worker invocation and bounded UI jobs
+  browser_runner.cjs       # actual Playwright human/tool journeys
+  browser_sessions.py      # capabilities, receipts, independent final observation
   core.py                  # application fixture, observer, comparison, reducer
   evidence.py              # atomic saved cases, manifests, verified ZIP export
   reports.py               # standalone readable report
@@ -17,13 +21,17 @@ consentdiff/
   static/
     index.html             # four-tab local workbench
     styles.css             # presentation
-    app.js                 # interface and local API calls
+    app.js                 # interface, browser jobs and local API calls
+    driver.html            # isolated rendered journey controls
+    driver.js              # HTTP/native WebMCP tool surface
 tests/
   test_core.py             # fixture, oracle, and reduction checks
   test_integration.py      # evidence and server checks
+  test_browser_integration.py # config, receipt and evidence boundary checks
   browser_smoke.cjs        # optional Playwright/Chrome checks of the real interface
 examples/
-  test-config.json         # future specification, not loaded by runtime
+  test-config.json         # executable HTTP browser configuration
+  native-config.json       # executable native WebMCP configuration
   scenarios.json          # future specification, not loaded by runtime
   measured-validation.json # actual suite and reduction results
   sample-run/              # generated paired SQLite witness and verified report
@@ -32,15 +40,15 @@ pyproject.toml            # package metadata; runtime dependencies are empty
 runs/                     # generated cases, not source
 ~~~
 
-Only the code and fixtures in this tree are implemented. The broader browser/native-tool adapter design is in [INTEGRATION_ROADMAP.md](INTEGRATION_ROADMAP.md).
+The source tree implements both the controller reference and owned local browser integration. [BROWSER_INTEGRATION.md](BROWSER_INTEGRATION.md) documents the actual browser lifecycle; [INTEGRATION_ROADMAP.md](INTEGRATION_ROADMAP.md) distinguishes further external-application work.
 
 ## Human and tool paths
 
 `Application` in `core.py` provides the same action controller used by the visible demo. The paired runner invokes this controller directly with a human or tool driver label.
 
-The human path does **not** click browser elements or extract an accessibility tree during the automated paired run. The visible workbench provides a real manual interface to the same controller. Browser UI checks are separate validation and must not be described as browser execution of the entire scenario suite.
+The fast reference runner invokes controllers directly. The separate `browser-run` runner clicks actual rendered controls for the human path and invokes structured HTTP or native WebMCP for the tool path. Native mode registers, discovers and executes the real `document.modelContext` tool, with feature detection and invocation records. Both paths use fresh independent databases for every repeat.
 
-The structured tool path is a local application adapter. No native WebMCP browser API is invoked.
+The browser session backend validates ordered actions and capture receipts, then recomputes the result from its own databases and frozen identity maps. Client-submitted verdicts are not accepted. Saved browser cases retain actual databases, receipts, visible captures and screenshots from each repeat; controller cases retain their independently checked replay.
 
 ## Two independent fixture databases
 

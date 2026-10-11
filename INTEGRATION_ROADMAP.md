@@ -1,18 +1,18 @@
-# Future integration architecture
+# Integration status and remaining architecture
 
-The local reference is implemented. This document preserves the larger product design without implying that browser-driven suites, native WebMCP, arbitrary application adapters, or AI workflow discovery already exist.
+The owned local browser integration is now delivered. `browser_runner.cjs` clicks actual Chrome controls, `driver.js` registers and invokes native WebMCP when available, and `browser_sessions.py` validates captures and independently observes SQLite. The strict loader accepts the executable HTTP/native configurations. See [BROWSER_INTEGRATION.md](BROWSER_INTEGRATION.md) for commands and measured capabilities. Arbitrary applications and AI workflow discovery remain future work.
 
 ## Browser-driven human journeys
 
-A future adapter should drive actual visible controls using a supported browser automation tool. It must record the meaningful confirmation values, errors, cancellations, and resulting authoritative state.
+Delivered: the Playwright adapter drives actual visible controls, records displayed plans and confirmations, follows cancellation/change/retry scenarios, and retains authoritative observations plus screenshots for every repeat.
 
-The current human adapter calls the shared application controller directly. Keep both adapters available and identify them accurately in reports. Passing controller tests is not evidence that a browser locator, accessibility label, rendered dialog, or focus behavior is correct.
+The earlier controller adapter remains available for fast reference testing and reduction. Reports distinguish it from browser execution. Browser cases cannot invoke the controller reducer while claiming a browser-minimized result.
 
 ## Native WebMCP tool journeys
 
-Add actual discovery and invocation against a pinned browser and API version. Feature-detect support, record the tool registration and invocation, and make unsupported runs explicit.
+Delivered: real `document.modelContext` registration, discovery and invocation with feature detection and recorded invocation counts. Chrome 154.0.8037.99 passes with the WebMCP testing feature enabled in a disposable profile; default launch records unsupported capability and can use HTTP fallback.
 
-The existing structured tool controller is local Python application behavior. It cannot be relabeled as native WebMCP. Native API changes and browser support must be checked against primary documentation during implementation.
+The structured HTTP path is separately labelled. It is never relabelled native WebMCP. Current primary documentation is linked in the integration guide; later API revisions require new runtime validation.
 
 ## Proposed future structure
 
@@ -28,13 +28,13 @@ Future modules, not implemented files:
   tests/adapters/              # independently reset integration fixtures
 ~~~
 
-The original design considered TypeScript and Playwright for browser-heavy work. The delivered reference instead uses dependency-free Python. Future integrations may use either approach, but their dependencies and interoperability require real implementation and testing.
+The delivered controller uses dependency-free Python. The delivered browser runner uses JavaScript, Playwright and installed Chrome. The modules listed above describe possible external-application extensions, not missing requirements for the delivered owned local integration.
 
 ## Declarative inputs
 
-The JSON files under `examples/` retain the proposed richer scenario/configuration format. They are not executable inputs to the reference runner.
+`examples/test-config.json` and `examples/native-config.json` are executable schema 1.0 inputs. `examples/scenarios.json` alone retains the richer design language and is not executable.
 
-A real loader needs versioned schemas, rejected unknown fields, typed actions, reviewed locators and adapters, limits on resources, safe reset behavior, and no arbitrary script execution. Input validation must distinguish absent values, null, false, and empty values where the application semantics differ.
+The loader rejects unknown fields, duplicate JSON keys, invalid types and invalid action orders; it limits scenarios and repeats and accepts no arbitrary scripts, URLs or locators. Broader contracts would need their own reviewed schema and adapters.
 
 ## Cross-application equivalence
 

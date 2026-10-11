@@ -69,6 +69,54 @@ def run_case(root, scenario_id='CD-002', mode='seeded', repeats=2):
         raise
 
 
+def save_browser_case(root, trials):
+    """Save observed browser sessions, without replaying controller shortcuts."""
+    import copy
+    result = copy.deepcopy(trials[0]['result'])
+    stable_keys = ('status', 'findings', 'parity', 'intent_satisfied', 'journeys', 'baseline_equal')
+    consistent = all(all(t['result'][k] == result[k] for k in stable_keys) for t in trials)
+    result.update(repeats=len(trials), repeat_consistent=consistent, witness_matches=True)
+    if not consistent:
+        result.update(status='INCONCLUSIVE', findings=[], intent_satisfied=False)
+    root = Path(root).resolve()
+    root.mkdir(parents=True, exist_ok=True)
+    now = datetime.now(timezone.utc)
+    case_id = now.strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:10]
+    work = Path(tempfile.mkdtemp(prefix='.pending-', dir=root))
+    try:
+        for index, trial in enumerate(trials):
+            evidence = work / 'evidence' if index == 0 else work / 'evidence' / 'repeats' / str(index + 1)
+            evidence.mkdir(parents=True, exist_ok=True)
+            write_json(evidence / 'intent.json', trial['result']['intent'])
+            write_json(evidence / 'runtime.json', trial['result']['runtime'])
+            write_json(evidence / 'comparison.json', trial['result'])
+            for driver in ('human', 'tool'):
+                folder = evidence / driver
+                folder.mkdir()
+                journey = trial['result']['journeys'][driver]
+                shutil.copy2(trial['session']['apps'][driver].path, folder / 'application.sqlite')
+                for name in ('before', 'after', 'trace', 'identity_mapping'):
+                    write_json(folder / (name + '.json'), journey[name])
+                write_json(folder / 'browser-events.json', trial['captures'][driver]['events'])
+                write_json(folder / 'server-receipts.json', trial['session']['receipts'][driver])
+                for name, image in trial['captures'][driver]['screenshots'].items():
+                    (folder / (name + '.png')).write_bytes(image)
+        case = {'case_id': case_id, 'created_at': now.isoformat(), 'tool_version': __version__,
+                'config': {'scenario_id': result['scenario']['id'], 'mode': result['mode'], 'repeats': len(trials),
+                           'execution': 'browser', 'steps': result['steps'], 'tool_adapter': result['runtime']['tool_adapter']},
+                'result': result, 'artifacts': {kind: f'/api/cases/{case_id}/{kind}' for kind in ('report', 'json', 'bundle')}}
+        write_json(work / 'case.json', case)
+        (work / 'report.html').write_bytes(render_report(case).encode('utf-8'))
+        write_json(work / 'manifest.json', {'algorithm': 'sha256', 'case_id': case_id, 'tool_version': __version__,
+                   'files': {p.relative_to(work).as_posix(): sha256(p) for p in sorted(work.rglob('*')) if p.is_file()}})
+        work.rename(root / case_id)
+        return case
+    except BaseException:
+        if work.exists() and work.resolve().parent == root and work.name.startswith('.pending-'):
+            shutil.rmtree(work)
+        raise
+
+
 def load_case(root, case_id):
     return json.loads((case_path(root, case_id) / 'case.json').read_text(encoding='utf-8'))
 

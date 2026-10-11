@@ -1,0 +1,718 @@
+{
+  "status": "PASS",
+  "execution": "browser",
+  "browser_version": "154.0.8037.99",
+  "config": {
+    "schema_version": "1.0",
+    "fixture": "consentdiff-owned-local-app",
+    "scenarios": [
+      {
+        "id": "CD-001",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-002",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-003",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-004",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "cancel",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-005",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "change_role",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-006",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-007",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-008",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-009",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "confirm",
+          "commit",
+          "retry",
+          "inspect"
+        ]
+      },
+      {
+        "id": "CD-010",
+        "steps": [
+          "inspect",
+          "stage",
+          "inspect",
+          "cancel",
+          "commit",
+          "inspect"
+        ]
+      }
+    ],
+    "modes": [
+      "seeded",
+      "repaired"
+    ],
+    "repeats": 2,
+    "tool_adapter": "native",
+    "webmcp_testing": true
+  },
+  "summary": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "results": [
+    {
+      "id": "CD-001",
+      "mode": "seeded",
+      "title": "Correct viewer share",
+      "case_id": "20261011T003112Z-cd9b10b5eb",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003112Z-cd9b10b5eb/report",
+        "json": "/api/cases/20261011T003112Z-cd9b10b5eb/json",
+        "bundle": "/api/cases/20261011T003112Z-cd9b10b5eb/bundle"
+      }
+    },
+    {
+      "id": "CD-002",
+      "mode": "seeded",
+      "title": "Tool widens the role",
+      "case_id": "20261011T003114Z-b47a1cc607",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003114Z-b47a1cc607/report",
+        "json": "/api/cases/20261011T003114Z-b47a1cc607/json",
+        "bundle": "/api/cases/20261011T003114Z-b47a1cc607/bundle"
+      }
+    },
+    {
+      "id": "CD-003",
+      "mode": "seeded",
+      "title": "Both paths agree but violate intent",
+      "case_id": "20261011T003117Z-452747f8f7",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "intent_violation"
+      ],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003117Z-452747f8f7/report",
+        "json": "/api/cases/20261011T003117Z-452747f8f7/json",
+        "bundle": "/api/cases/20261011T003117Z-452747f8f7/bundle"
+      }
+    },
+    {
+      "id": "CD-004",
+      "mode": "seeded",
+      "title": "Tool commits after cancellation",
+      "case_id": "20261011T003121Z-3a34cbe7d2",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "cancellation_violation",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003121Z-3a34cbe7d2/report",
+        "json": "/api/cases/20261011T003121Z-3a34cbe7d2/json",
+        "bundle": "/api/cases/20261011T003121Z-3a34cbe7d2/bundle"
+      }
+    },
+    {
+      "id": "CD-005",
+      "mode": "seeded",
+      "title": "Old approval reused after role change",
+      "case_id": "20261011T003123Z-e86ea0b378",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "stale_confirmation",
+        "overbroad_permission",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 7,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003123Z-e86ea0b378/report",
+        "json": "/api/cases/20261011T003123Z-e86ea0b378/json",
+        "bundle": "/api/cases/20261011T003123Z-e86ea0b378/bundle"
+      }
+    },
+    {
+      "id": "CD-006",
+      "mode": "seeded",
+      "title": "Display-name collision picks wrong user",
+      "case_id": "20261011T003125Z-f768296c57",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "wrong_recipient",
+        "state_postcondition_violation",
+        "confirmation_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003125Z-f768296c57/report",
+        "json": "/api/cases/20261011T003125Z-f768296c57/json",
+        "bundle": "/api/cases/20261011T003125Z-f768296c57/bundle"
+      }
+    },
+    {
+      "id": "CD-007",
+      "mode": "seeded",
+      "title": "Success reported without a grant",
+      "case_id": "20261011T003127Z-9066b6b0b5",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "false_success",
+        "state_postcondition_violation",
+        "false_success",
+        "state_postcondition_violation",
+        "intent_violation"
+      ],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003127Z-9066b6b0b5/report",
+        "json": "/api/cases/20261011T003127Z-9066b6b0b5/json",
+        "bundle": "/api/cases/20261011T003127Z-9066b6b0b5/bundle"
+      }
+    },
+    {
+      "id": "CD-008",
+      "mode": "seeded",
+      "title": "Effect observer unavailable",
+      "case_id": "20261011T003131Z-38cadbfd0c",
+      "expected_status": "INCONCLUSIVE",
+      "observed_status": "INCONCLUSIVE",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003131Z-38cadbfd0c/report",
+        "json": "/api/cases/20261011T003131Z-38cadbfd0c/json",
+        "bundle": "/api/cases/20261011T003131Z-38cadbfd0c/bundle"
+      }
+    },
+    {
+      "id": "CD-009",
+      "mode": "seeded",
+      "title": "Retry duplicates the operation",
+      "case_id": "20261011T003133Z-09719a739f",
+      "expected_status": "FAIL",
+      "observed_status": "FAIL",
+      "status": "PASS",
+      "finding_kinds": [
+        "duplicate_effect",
+        "state_postcondition_violation",
+        "path_divergence"
+      ],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 7,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003133Z-09719a739f/report",
+        "json": "/api/cases/20261011T003133Z-09719a739f/json",
+        "bundle": "/api/cases/20261011T003133Z-09719a739f/bundle"
+      }
+    },
+    {
+      "id": "CD-010",
+      "mode": "seeded",
+      "title": "Both paths respect cancellation",
+      "case_id": "20261011T003135Z-882d753c1d",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003135Z-882d753c1d/report",
+        "json": "/api/cases/20261011T003135Z-882d753c1d/json",
+        "bundle": "/api/cases/20261011T003135Z-882d753c1d/bundle"
+      }
+    },
+    {
+      "id": "CD-001",
+      "mode": "repaired",
+      "title": "Correct viewer share",
+      "case_id": "20261011T003139Z-43b3204c80",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003139Z-43b3204c80/report",
+        "json": "/api/cases/20261011T003139Z-43b3204c80/json",
+        "bundle": "/api/cases/20261011T003139Z-43b3204c80/bundle"
+      }
+    },
+    {
+      "id": "CD-002",
+      "mode": "repaired",
+      "title": "Tool widens the role",
+      "case_id": "20261011T003141Z-71c5c48d91",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003141Z-71c5c48d91/report",
+        "json": "/api/cases/20261011T003141Z-71c5c48d91/json",
+        "bundle": "/api/cases/20261011T003141Z-71c5c48d91/bundle"
+      }
+    },
+    {
+      "id": "CD-003",
+      "mode": "repaired",
+      "title": "Both paths agree but violate intent",
+      "case_id": "20261011T003143Z-d2f145debb",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003143Z-d2f145debb/report",
+        "json": "/api/cases/20261011T003143Z-d2f145debb/json",
+        "bundle": "/api/cases/20261011T003143Z-d2f145debb/bundle"
+      }
+    },
+    {
+      "id": "CD-004",
+      "mode": "repaired",
+      "title": "Tool commits after cancellation",
+      "case_id": "20261011T003145Z-d53f333ee2",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003145Z-d53f333ee2/report",
+        "json": "/api/cases/20261011T003145Z-d53f333ee2/json",
+        "bundle": "/api/cases/20261011T003145Z-d53f333ee2/bundle"
+      }
+    },
+    {
+      "id": "CD-005",
+      "mode": "repaired",
+      "title": "Old approval reused after role change",
+      "case_id": "20261011T003150Z-40978053b1",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 7,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003150Z-40978053b1/report",
+        "json": "/api/cases/20261011T003150Z-40978053b1/json",
+        "bundle": "/api/cases/20261011T003150Z-40978053b1/bundle"
+      }
+    },
+    {
+      "id": "CD-006",
+      "mode": "repaired",
+      "title": "Display-name collision picks wrong user",
+      "case_id": "20261011T003152Z-76ea0848a1",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003152Z-76ea0848a1/report",
+        "json": "/api/cases/20261011T003152Z-76ea0848a1/json",
+        "bundle": "/api/cases/20261011T003152Z-76ea0848a1/bundle"
+      }
+    },
+    {
+      "id": "CD-007",
+      "mode": "repaired",
+      "title": "Success reported without a grant",
+      "case_id": "20261011T003154Z-398e4df926",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003154Z-398e4df926/report",
+        "json": "/api/cases/20261011T003154Z-398e4df926/json",
+        "bundle": "/api/cases/20261011T003154Z-398e4df926/bundle"
+      }
+    },
+    {
+      "id": "CD-008",
+      "mode": "repaired",
+      "title": "Effect observer unavailable",
+      "case_id": "20261011T003157Z-8f07b63b24",
+      "expected_status": "INCONCLUSIVE",
+      "observed_status": "INCONCLUSIVE",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003157Z-8f07b63b24/report",
+        "json": "/api/cases/20261011T003157Z-8f07b63b24/json",
+        "bundle": "/api/cases/20261011T003157Z-8f07b63b24/bundle"
+      }
+    },
+    {
+      "id": "CD-009",
+      "mode": "repaired",
+      "title": "Retry duplicates the operation",
+      "case_id": "20261011T003201Z-ab5a8578ad",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 7,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003201Z-ab5a8578ad/report",
+        "json": "/api/cases/20261011T003201Z-ab5a8578ad/json",
+        "bundle": "/api/cases/20261011T003201Z-ab5a8578ad/bundle"
+      }
+    },
+    {
+      "id": "CD-010",
+      "mode": "repaired",
+      "title": "Both paths respect cancellation",
+      "case_id": "20261011T003203Z-74747304f6",
+      "expected_status": "PASS",
+      "observed_status": "PASS",
+      "status": "PASS",
+      "finding_kinds": [],
+      "repeats": 2,
+      "tool_adapter": "native-webmcp",
+      "native": {
+        "status": "available",
+        "surface": "document.modelContext",
+        "secure_context": true,
+        "registered": true,
+        "discovered": true,
+        "invocations": 6,
+        "reason": "Browser-native tool registered and discovered.",
+        "testing_flag": true
+      },
+      "artifacts": {
+        "report": "/api/cases/20261011T003203Z-74747304f6/report",
+        "json": "/api/cases/20261011T003203Z-74747304f6/json",
+        "bundle": "/api/cases/20261011T003203Z-74747304f6/bundle"
+      }
+    }
+  ],
+  "errors": [],
+  "interpretation": "Suite PASS means the real browser journeys matched expected fixture outcomes, including intentional failures and unknown evidence."
+}

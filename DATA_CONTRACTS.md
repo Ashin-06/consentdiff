@@ -56,7 +56,7 @@ Each finding includes `kind`, `journey`, `expected`, `actual`, and `evidence_ref
 
 `run_scenario` adds `repeats` and `repeat_consistent`. The evidence layer runs a separate retained witness and adds `witness_matches`. Disagreement makes the case inconclusive.
 
-A saved case wraps the result with `case_id`, `created_at`, `tool_version`, `config`, and artifact links. The exported databases belong to that retained witness rather than every earlier temporary repeat.
+A saved case wraps the result with `case_id`, `created_at`, `tool_version`, `config`, and artifact links. For controller runs, the exported databases belong to that retained witness. Browser cases instead retain the actual per-repeat databases and add `execution: browser`, `runtime`, visible captures, server receipts and screenshots, including later repeats under `evidence/repeats/`. The backend accepts no client verdict and independently observes effects before saving.
 
 ## Suite results
 
@@ -74,8 +74,8 @@ Evaluations count individual paired runs. A normal oracle decision uses two. Inv
 
 A case stores `case.json`, `report.html`, `manifest.json`, `evidence/intent.json`, and per-path application.sqlite, before.json, after.json, and trace.json.
 
-The manifest covers 11 content files and is not self-hashed. Verification checks required files, safe paths, file digests, and unexpected content. It is unsigned and provides integrity relative to the manifest, not authenticity.
+The original controller manifest covers 11 content files. Browser manifests additionally cover all per-repeat observations, captures, screenshots and databases. The manifest itself is not self-hashed. Verification checks required files, safe paths, file digests, and unexpected content. It is unsigned and provides integrity relative to the manifest, not authenticity.
 
-## Design-only examples
+## Executable and design-only inputs
 
-The original example files preserve richer future contracts, named journey recipes, and proposed browser adapter configuration. Their field names and variant labels are not guaranteed to match the implemented fixed catalogue. Do not pass them to the runtime as if a scenario loader exists. Future loader work is described in [INTEGRATION_ROADMAP.md](INTEGRATION_ROADMAP.md).
+`examples/test-config.json` and `examples/native-config.json` are executable schema 1.0 configurations validated by `config.py`. Unknown fields, duplicate keys, invalid scenario IDs, invalid action order, and unbounded repeats are rejected. The supported keys and limits are documented in [BROWSER_INTEGRATION.md](BROWSER_INTEGRATION.md). Only `examples/scenarios.json` retains the richer design-only language; it is not accepted by this loader.

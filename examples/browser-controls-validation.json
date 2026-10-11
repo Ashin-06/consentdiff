@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-11T00:35:50.381Z",
+  "checks": [
+    "Workbench launches actual HTTP browser job and displays saved observed failure.",
+    "Workbench native job invokes actual registered and discovered WebMCP tool six times.",
+    "Browser integration controls fit the mobile viewport."
+  ],
+  "errors": [],
+  "case_id": "20261011T003549Z-438f449f62"
+}

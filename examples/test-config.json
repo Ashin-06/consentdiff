@@ -1,30 +1,13 @@
 {
-  "schema_version": "0.1-design",
-  "implementation_status": "specification_only_not_executable",
-  "runtime_support": "The implemented local reference uses controller adapters and a fixed catalogue; it does not load this proposed browser-integration configuration.",
-  "project": "ConsentDiff",
-  "scenario_file": "scenarios.json",
-  "fixture": "fictional_file_sharing_app",
-  "paired_state": "independent_equivalent_fixtures",
-  "drivers": {
-    "human": "planned_playwright_visible_ui",
-    "agent": "planned_local_structured_tool_adapter",
-    "native_webmcp_validation_claimed": false
-  },
-  "observer": {
-    "type": "planned_test_only_committed_effect_observer",
-    "available_to_journey_drivers": false,
-    "missing_evidence_status": "INCONCLUSIVE"
-  },
-  "comparison": {
-    "check_declared_intent": true,
-    "check_confirmation_binding": true,
-    "check_cross_interface_effects": true,
-    "critical_fields": ["actor", "action", "resource", "recipient", "role", "confirmation_state_version"],
-    "ignored_fields": ["fixture_physical_id", "request_id"],
-    "ignored_fields_require_explicit_mapping": true
-  },
-  "cancellation_semantics": "pre_commit_cancel_prevents_commit",
-  "reduction": {"strategy": "greedy_valid_step_removal", "preserve_preconditions": true},
-  "evidence": {"include_reusable_credentials": false, "data_class": "fictional", "hash_artifacts": true}
+  "schema_version": "1.0",
+  "fixture": "consentdiff-owned-local-app",
+  "scenarios": [
+    {"id": "CD-001"}, {"id": "CD-002"}, {"id": "CD-003"},
+    {"id": "CD-004"}, {"id": "CD-005"}, {"id": "CD-006"},
+    {"id": "CD-007"}, {"id": "CD-008"}, {"id": "CD-009"}, {"id": "CD-010"}
+  ],
+  "modes": ["seeded", "repaired"],
+  "repeats": 2,
+  "tool_adapter": "http",
+  "webmcp_testing": false
 }

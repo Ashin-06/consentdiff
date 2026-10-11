@@ -13,4 +13,18 @@ Actual generated results are in `examples/measured-validation.json`, `examples/b
 
 Reproduce the Python checks with `python -m unittest discover -s tests -v`. For browser checks, start `python -m consentdiff serve`, provide Playwright and Chrome in your development environment, and run `node tests/browser_smoke.cjs`.
 
-The paired scenario engine calls deterministic controller adapters; browser checks separately drive the visible local interface. These results do not certify external applications, native WebMCP, legal consent, arbitrary browser journeys, or production authentication. Hash manifests are unsigned.
+These original reference measurements cover deterministic controller adapters and separate workbench checks. The real browser/native results are recorded below. Neither set certifies arbitrary external applications, legal consent or production authentication. Hash manifests are unsigned.
+
+## Real integrations validated on 11 October 2026
+
+- **44 Python tests passed** in the final release run, including ten new configuration, session capability, receipt, capture and evidence-boundary checks.
+- **HTTP browser suite: 20/20 expectations matched**, covering all ten scenarios in seeded and repaired modes, with two fresh paired trials per row.
+- **Native WebMCP suite: 20/20 expectations matched**, with the same coverage and actual registration, discovery and invocation in Chrome 154.0.8037.99 using a disposable testing profile.
+- **17 workbench checks passed again**, plus **3 new integration-control checks**: launch an HTTP job, launch a native job with six actual invocations, and fit the integration controls at 390px. No JavaScript errors; the native result screenshot was visually inspected.
+- Default Chrome launch reports native capability unavailable. HTTP works independently; required native mode never silently falls back.
+
+Both transport suites preserve seeded outcomes of 2 PASS, 7 FAIL and 1 INCONCLUSIVE, and repaired outcomes of 9 PASS and 1 INCONCLUSIVE. Forty expectation rows across both transports represent 80 fresh paired trials. Suite PASS means expected fixture behavior matched, including intentional defects.
+
+Measured outputs: `examples/browser-http-validation.json`, `examples/browser-native-validation.json`, and `examples/browser-controls-validation.json`. Full per-repeat reports, SQLite states, screenshots, receipts and manifests are in the ignored local `.test-output/http-browser-runs/` and `.test-output/native-browser-runs/` directories. Rerun the documented browser commands to generate new evidence on another machine.
+
+The earlier controller-only scope paragraph describes the original reference run. Native WebMCP is now validated within the precise local scope above. External websites, production authentication, cryptographic approvals, browser-driven reduction and remote attestation remain outside scope.
