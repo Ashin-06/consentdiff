@@ -8,7 +8,7 @@ A person authorizes **viewer access** for one recipient. A deliberately defectiv
 
 ## Start the local application
 
-From this project directory, with Python 3.10 or newer:
+From this project directory, with Python 3.12 or newer:
 
 ~~~powershell
 python -m consentdiff serve --port 8767 --runs-dir runs
@@ -92,6 +92,31 @@ Automatic website discovery, arbitrary contracts, production authentication, ext
 
 `examples/test-config.json` and `examples/native-config.json` are executable browser configurations. `examples/scenarios.json` retains a richer **design-only** language; it is not accepted by the loader. `examples/browser-http-validation.json` and `examples/browser-native-validation.json` contain actual measured integration results. Earlier controller measurements and sample evidence remain available. [INTEGRATION_ROADMAP.md](INTEGRATION_ROADMAP.md) distinguishes delivered integrations from broader future work.
 
+## Running as a service
+
+The container image runs the same workbench in production mode, still with no third-party packages:
+
+```bash
+docker build -t consentdiff .
+python -m consentdiff.ops keygen            # one API key per person: analyst, viewer or monitor
+docker run -d --name consentdiff -p 8767:8767 -v consentdiff-data:/data \
+  -e CONSENTDIFF_KEYS_FILE=/run/secrets/consentdiff-keys.json -e CONSENTDIFF_ALLOWED_HOSTS=lab.example.org \
+  consentdiff
+```
+
+With API keys configured, every `/api` route needs a key (`X-API-Key` or `Authorization: Bearer`): `analyst` runs experiments, `viewer` opens saved cases and downloads, `monitor` reads `/metrics`. The page asks for the key once per browser session. `/healthz` and `/readyz` are open for probes; requests are rate-limited per client and logged as JSON lines with request IDs, without submitted content. See [docs/runbook.md](docs/runbook.md) and [docs/threat-model.md](docs/threat-model.md).
+
+| Variable | Purpose |
+|---|---|
+| `CONSENTDIFF_ENV=production` | refuse to start without hashed API keys |
+| `CONSENTDIFF_API_KEYS` / `CONSENTDIFF_KEYS_FILE` | hashed API keys with roles |
+| `CONSENTDIFF_HOST`, `CONSENTDIFF_PORT` | default `127.0.0.1:8767`; any other address needs API keys |
+| `CONSENTDIFF_ALLOWED_HOSTS` | host names clients use, besides loopback (DNS-rebinding protection) |
+| `CONSENTDIFF_DATA_DIR` | where cases are kept (default `./runs`, `/data` in the image) |
+| `CONSENTDIFF_RATE_LIMIT` | requests per minute per client (default 120) |
+
+Browser automation (real Chrome driving the workbench) stays a workstation feature: run `consentdiff browser-run` locally. With API keys configured, the `/api/browser/*` routes are switched off, and a key-less loopback workbench is not rate-limited so its browser runs aren't throttled.
+
 ## Read the detailed documentation
 
 | Document | Purpose |
@@ -116,3 +141,7 @@ The contribution is this concrete reference harness: paired physical state, expl
 - [Chrome's imperative WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) documents the native API used by the adapter. No extension or polyfill is required.
 
 This project makes no “first ever” claim. It does not require or use AI to decide whether a permission changed.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
