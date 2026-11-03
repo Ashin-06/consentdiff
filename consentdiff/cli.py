@@ -11,8 +11,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description='ConsentDiff local human/tool consistency reference lab')
     commands = parser.add_subparsers(dest='command', required=True)
     serve = commands.add_parser('serve')
-    serve.add_argument('--port', type=int, default=8767)
-    serve.add_argument('--runs-dir', default='runs')
+    serve.add_argument('--port', type=int, help='default CONSENTDIFF_PORT or 8767')
+    serve.add_argument('--runs-dir', help='default CONSENTDIFF_DATA_DIR or ./runs')
     commands.add_parser('catalog')
     browser = commands.add_parser('browser-run', help='Run real Chrome controls against the owned disposable local application')
     browser.add_argument('--config', default='examples/test-config.json')
@@ -45,9 +45,11 @@ def main(argv=None):
             import threading
             from .browser import run_browser
             from .config import load_config
+            from . import ops
             from .server import create_server
             config = load_config(args.config)
-            server = create_server(0, args.output_dir)
+            # A disposable loopback server that this run's local Chrome drives: never keyed, never public.
+            server = create_server(0, args.output_dir, ops.Settings())
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()
             try:

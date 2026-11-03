@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from consentdiff.core import Application, catalog, compare, minimize, observe, run_pair, run_scenario, run_suite
+from consentdiff.core import Application, compare, minimize, observe, run_pair, run_scenario, run_suite
 from consentdiff.sandbox import Sandbox
 
 

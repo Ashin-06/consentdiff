@@ -175,7 +175,7 @@ def observe(path, available=True, identity_mapping=None):
 
             def rows(table):
                 records = []
-                for physical, role, resource, operation in db.execute(f'SELECT recipient,role,resource,operation FROM {table} ORDER BY rowid'):
+                for physical, role, resource, operation in db.execute(f'SELECT recipient,role,resource,operation FROM {table} ORDER BY rowid'):  # nosec B608 - fixed table names from this module
                     if physical not in inverse:
                         return None
                     records.append({'recipient': inverse[physical], 'role': role, 'resource': resource, 'operation': operation})
@@ -232,7 +232,7 @@ def compare(intent, journeys):
         if after['status'] != 'complete':
             continue
         effects, grants = after['effects'], after['grants']
-        def fail(kind, expected, actual):
+        def fail(kind, expected, actual, driver=driver):
             findings.append({'kind': kind, 'journey': driver, 'expected': expected, 'actual': actual,
                              'evidence_ref': f'{driver}/after.json'})
         if expected_count == 0 and (effects or grants):
