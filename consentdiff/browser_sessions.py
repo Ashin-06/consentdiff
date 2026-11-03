@@ -109,13 +109,19 @@ class BrowserSessions:
             strict_object(runtime, ('browser_version', 'tool_adapter', 'webmcp', 'runner', 'headless'), ('browser_version', 'tool_adapter', 'webmcp', 'runner', 'headless'))
             if runtime['runner'] != 'playwright' or runtime['headless'] is not True or runtime['tool_adapter'] not in ('structured-http', 'native-webmcp'):
                 raise ValueError('Unsupported browser execution metadata.')
-            if not isinstance(runtime['browser_version'], str) or len(runtime['browser_version']) > 80 or not isinstance(runtime['webmcp'], dict):
+            if not isinstance(runtime['browser_version'], str) or not 1 <= len(runtime['browser_version']) <= 80 or not isinstance(runtime['webmcp'], dict):
                 raise ValueError('Invalid runtime metadata.')
             native = runtime['webmcp']
             strict_object(native, ('status', 'surface', 'secure_context', 'registered', 'discovered', 'invocations', 'reason', 'testing_flag'),
                           ('status', 'surface', 'secure_context', 'registered', 'discovered', 'invocations', 'reason', 'testing_flag'))
             if type(native['invocations']) is not int or native['invocations'] < 0 or not isinstance(native['reason'], str) or len(native['reason']) > 3000:
                 raise ValueError('Invalid native capability report.')
+            if native['status'] not in ('unsupported', 'available', 'unavailable', 'error') or native['surface'] not in (None, 'document.modelContext'):
+                raise ValueError('Invalid native capability status or surface.')
+            if any(type(native[key]) is not bool for key in ('secure_context', 'registered', 'discovered', 'testing_flag')):
+                raise ValueError('Native capability flags must be booleans.')
+            if native['status'] == 'available' and not (native['surface'] == 'document.modelContext' and native['secure_context'] and native['registered'] and native['discovered']):
+                raise ValueError('Available native capability requires registration and discovery.')
             if runtime['tool_adapter'] == 'native-webmcp' and not (native['status'] == 'available' and native['surface'] == 'document.modelContext'
                     and native['secure_context'] is True and native['registered'] is True and native['discovered'] is True
                     and native['invocations'] == len(session['steps'])):
@@ -136,7 +142,8 @@ class BrowserSessions:
                     expected_transport = 'playwright-visible-control' if driver == 'human' else runtime['tool_adapter']
                     if event['action'] != receipt['action'] or event['receipt_id'] != receipt['id'] or event['transport'] != receipt['transport'] or event['transport'] != expected_transport:
                         raise ValueError('Browser capture does not match the server action receipt.')
-                    if any(event[key] != step[key] for key in ('plan', 'approval', 'cancelled', 'response')):
+                    if any(json.dumps(event[key], sort_keys=True, allow_nan=False) != json.dumps(step[key], sort_keys=True, allow_nan=False)
+                           for key in ('plan', 'approval', 'cancelled', 'response')):
                         raise ValueError('Captured consent state does not match the server record.')
                     if not isinstance(event['visible'], str) or not 1 <= len(event['visible']) <= 12000:
                         raise ValueError('Missing or oversized visible UI capture.')
@@ -166,6 +173,8 @@ class BrowserSessions:
         first = prepared[0]['result']
         if any(any(p['result'][k] != first[k] for k in ('scenario', 'mode', 'steps')) for p in prepared):
             raise ValueError('Repeated trials must share the same scenario, mode and steps.')
+        if any(p['result']['runtime'] != first['runtime'] for p in prepared):
+            raise ValueError('Repeated trials must share one browser version, transport and capability configuration.')
         return prepared
 
     def close_ids(self, ids):

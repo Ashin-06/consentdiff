@@ -10,6 +10,33 @@ def strict_object(value, allowed, required=()):
         raise ValueError('Invalid object fields; expected: ' + ', '.join(sorted(allowed)))
 
 
+def strict_json(text):
+    """Reject ambiguous duplicate keys, non-finite numbers and deep payloads."""
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('Duplicate JSON key: ' + key)
+            result[key] = value
+        return result
+    def constant(value):
+        raise ValueError('Non-finite JSON numbers are not accepted: ' + value)
+    try:
+        value = json.loads(text, object_pairs_hook=unique, parse_constant=constant)
+    except RecursionError as exc:
+        raise ValueError('JSON nesting is too deep.') from exc
+    pending = [(value, 0)]
+    while pending:
+        item, depth = pending.pop()
+        if depth > 32:
+            raise ValueError('JSON nesting is too deep.')
+        if isinstance(item, dict):
+            pending.extend((v, depth + 1) for v in item.values())
+        elif isinstance(item, list):
+            pending.extend((v, depth + 1) for v in item)
+    return value
+
+
 def validate_config(value):
     strict_object(value, ('schema_version', 'fixture', 'scenarios', 'modes', 'repeats', 'tool_adapter', 'webmcp_testing'),
                   ('schema_version', 'fixture', 'scenarios'))
@@ -48,14 +75,7 @@ def load_config(path):
     path = Path(path)
     if path.stat().st_size > 65536:
         raise ValueError('Browser config must be at most 64 KiB.')
-    def unique(pairs):
-        result = {}
-        for key, value in pairs:
-            if key in result:
-                raise ValueError('Duplicate JSON key: ' + key)
-            result[key] = value
-        return result
-    return validate_config(json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=unique))
+    return validate_config(strict_json(path.read_text(encoding='utf-8')))
 
 
 def default_config(scenario_id=None, mode='seeded', repeats=2, tool_adapter='auto', webmcp_testing=False):

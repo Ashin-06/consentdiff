@@ -162,6 +162,25 @@ def verify_case(directory):
                 errors.append(f'Hash mismatch: {name}')
         actual = {p.relative_to(directory).as_posix() for p in directory.rglob('*') if p.is_file() and p != directory / 'manifest.json'}
         errors.extend(f'Unexpected: {name}' for name in sorted(actual - set(expected)))
+        # Hash consistency alone must not turn an incomplete browser trial into
+        # a complete record merely because its entries were removed from a manifest.
+        case_file = directory / 'case.json'
+        if case_file.is_file() and not case_file.is_symlink():
+            case = json.loads(case_file.read_text(encoding='utf-8'))
+            result = case.get('result', {})
+            if result.get('execution') == 'browser':
+                repeats = result.get('repeats')
+                if type(repeats) is not int or not 1 <= repeats <= 3:
+                    errors.append('Invalid browser repeat count.')
+                else:
+                    required = set()
+                    for index in range(repeats):
+                        prefix = 'evidence/' if index == 0 else f'evidence/repeats/{index + 1}/'
+                        required.update(prefix + name for name in ('intent.json', 'runtime.json', 'comparison.json'))
+                        for driver in ('human', 'tool'):
+                            required.update(prefix + driver + '/' + name for name in ('application.sqlite', 'before.json', 'after.json', 'trace.json',
+                                'identity_mapping.json', 'browser-events.json', 'server-receipts.json', 'before.png', 'after.png'))
+                    errors.extend('Missing browser evidence entry: ' + name for name in sorted(required - set(expected)))
         return {'status': 'FAIL' if errors else 'PASS', 'checked_files': len(expected), 'errors': errors,
                 'limitation': 'Unsigned hashes provide integrity relative to a manifest, not authenticity.'}
     except (OSError, ValueError, TypeError, AttributeError) as exc:

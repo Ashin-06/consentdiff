@@ -8,21 +8,22 @@ async function main(input) {
   const origin = new URL(input.origin);
   if (origin.protocol !== 'http:' || origin.hostname !== '127.0.0.1' || origin.username || origin.password || origin.pathname !== '/' || origin.search || origin.hash) throw new Error('Only the owned loopback server is permitted.');
   const base = origin.origin, config = input.config;
-  async function post(endpoint, value) {
-    const response = await fetch(base + endpoint, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});
+  async function post(endpoint, value, timeout = 15000) {
+    const response = await fetch(base + endpoint, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(value),signal:AbortSignal.timeout(timeout)});
     const body = await response.json();
     if (!response.ok) throw new Error(body.error || `${endpoint}: HTTP ${response.status}`);
     return body;
   }
-  const health = await (await fetch(base + '/api/health')).json();
+  const health = await (await fetch(base + '/api/health', {signal:AbortSignal.timeout(15000)})).json();
   if (health.application !== 'consentdiff') throw new Error('The selected loopback server is not the owned ConsentDiff application.');
   const browser = await chromium.launch({channel:'chrome',headless:true,args:config.webmcp_testing ? ['--enable-features=WebMCPTesting'] : []});
-  const rows = [], errors = [];
+  const rows = [], errors = [], active = new Map();
   try {
     for (const mode of config.modes) for (const scenario of config.scenarios) {
       const runs = [];
       for (let repeat = 0; repeat < config.repeats; repeat++) {
         const session = await post('/api/browser/start', {scenario_id:scenario.id,mode,steps:scenario.steps});
+        active.set(session.session_id, session.evidence_token);
         const captures = {}, runtime = {runner:'playwright',headless:true,browser_version:browser.version(),tool_adapter:null,webmcp:null};
         const context = await browser.newContext({viewport:{width:1000,height:900}});
         // Block requests outside this one owned server, including redirects.
@@ -68,14 +69,11 @@ async function main(input) {
             await page.close();
           }
           runs.push({session_id:session.session_id,evidence_token:session.evidence_token,captures,runtime});
-        } catch (error) {
-          await post('/api/browser/abort', {session_id:session.session_id,evidence_token:session.evidence_token}).catch(()=>{});
-          for (const run of runs) await post('/api/browser/abort', {session_id:run.session_id,evidence_token:run.evidence_token}).catch(()=>{});
-          throw error;
         } finally { await context.close(); }
       }
       if (errors.length) throw new Error('Browser JavaScript errors: ' + errors.join('; '));
       const saved = await post('/api/browser/finish',{runs});
+      for (const run of runs) active.delete(run.session_id);
       const result = saved.result;
       const expected = mode === 'seeded' ? result.scenario.expected_status : scenario.id === 'CD-008' ? 'INCONCLUSIVE' : 'PASS';
       const kinds = result.findings.map(f=>f.kind);
@@ -88,7 +86,10 @@ async function main(input) {
     return {status:passed===rows.length?'PASS':'FAIL',checked_at:new Date().toISOString(),execution:'browser',browser_version:browser.version(),config,
       summary:{total:rows.length,passed,failed:rows.length-passed},results:rows,errors,
       interpretation:'Suite PASS means the real browser journeys matched expected fixture outcomes, including intentional failures and unknown evidence.'};
-  } finally { await browser.close(); }
+  } finally {
+    await browser.close();
+    await Promise.allSettled([...active].map(([session_id,evidence_token]) => post('/api/browser/abort',{session_id,evidence_token},2000)));
+  }
 }
 
 let text=''; process.stdin.setEncoding('utf8');
