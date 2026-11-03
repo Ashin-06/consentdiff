@@ -4,7 +4,7 @@ ConsentDiff executes the owned disposable file-sharing app in headless Chrome. T
 
 ## Setup and run
 
-Requires Python 3.10+, Node.js 20+, installed Google Chrome and Playwright. From this directory, `npm install` installs the pinned Playwright 1.62.1 dependency in local `node_modules`. The runner uses the installed Chrome channel; no Playwright browser download is required. If Chrome is absent, install Google Chrome through its official installer. Existing Codex bundled Playwright is also detected when local dependencies are absent.
+Requires Python 3.10+, Node.js 20+, installed Google Chrome and Playwright. From this directory, `npm install` installs the pinned Playwright 1.62.1 dependency in local `node_modules`. The runner uses the installed Chrome channel; no Playwright browser download is required. If Chrome is absent, install Google Chrome through its official installer.
 
 ```powershell
 npm install

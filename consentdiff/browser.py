@@ -18,9 +18,6 @@ def node_environment():
     candidates = [str(Path.cwd() / 'node_modules')]
     if env.get('NODE_PATH'):
         candidates.append(env['NODE_PATH'])
-    bundled = Path.home() / '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules'
-    if bundled.is_dir():
-        candidates.append(str(bundled))
     env['NODE_PATH'] = os.pathsep.join(candidates)
     return env
 
